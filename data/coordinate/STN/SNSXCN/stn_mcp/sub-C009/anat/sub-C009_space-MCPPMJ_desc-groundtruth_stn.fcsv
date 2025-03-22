@@ -1,0 +1,5 @@
+# Markups fiducial file version = 4.11
+# CoordinateSystem = RAS
+# columns = id,x,y,z,ow,ox,oy,oz,vis,sel,lock,label,desc,associatedNodeID
+1,11.20729,-1.20857,-3.50957,0,0,0,1,1,1,1,1, Right STN ,vtkMRMLScalarVolumeNode1
+2,-10.27533,-1.17056,-3.46737,0,0,0,1,1,1,1,2, Left STN,vtkMRMLScalarVolumeNode1
