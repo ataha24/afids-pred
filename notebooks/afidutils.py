@@ -27,6 +27,14 @@ afids_labels = {
     29: 'RVOH', 30: 'LVOH', 31: 'ROSF', 32: 'LOSF'
 }
 
+#hardcoding right and left hemisphere afids
+right_afids = ['x_6','x_8','x_12','x_15','x_17','x_21','x_23','x_25','x_27','x_29','x_31','y_6','y_8','y_12','y_15','y_17','y_21','y_23','y_25','y_27','y_29','y_31', 'z_6','z_8','z_12','z_15','z_17','z_21','z_23','z_25','z_27','z_29','z_31']
+left_afids = ['x_7','x_9','x_13','x_16','x_18','x_22','x_24','x_26','x_28','x_30','x_32','y_7','y_9','y_13','y_16','y_18','y_22','y_24','y_26','y_28','y_30','y_32', 'z_7','z_9','z_13','z_16','z_18','z_22','z_24','z_26','z_28','z_30','z_32']
+combined_lables = ['AC','PC', 'ICS', 'PMJ','SIPF','SLMS','ILMS','CUL','IMS','MB','PG','LVAC','LVPC','GENU','SPLE','ALTH','SAMTH','IAMTH','IGO','VOH','OSF']
+combined_lables = [element + axis for axis in ['x', 'y', 'z'] for element in combined_lables]
+r = [6,8,12,15,17,21,23,25,27,29,31]
+l = [7,9,13,16,18,22,24,26,28,30,32]
+
 def fcsvtodf(fcsv_path):
     """
     Convert a .fcsv file (assumes RAS coordinate system) to a ML-friendly dataframe and return the cleaned xyz coordinates.
@@ -571,7 +579,6 @@ def plot_multiple_files(file_list, out_file, rotation=False, trace_lines=True, s
         ani = FuncAnimation(fig_mpl, update, frames=np.arange(0, 360, 2), interval=50)
         ani.save(gif_filename, writer='pillow')
 
-
     return out_file
 
 def save_single_slice_in_memory(data, x, y, z, offset, zoom_radius, show_crosshairs):
@@ -706,7 +713,6 @@ def generate_html_with_keypress(subject_images, reference_images, output_html="m
     with open(output_html, "w") as f:
         f.write(html_content)
         
-
 def generate_interactive_mri_html(nii_path, fcsv_path, labels, ref_nii_path=None, ref_fcsv_path=None, jitter=2, zoom_radius=20, out_file_prefix="mri_viewer"): 
     """
     Generates an interactive HTML viewer for MRI slices based on fiducial coordinates for a single subject.
@@ -775,9 +781,7 @@ def generate_interactive_mri_html(nii_path, fcsv_path, labels, ref_nii_path=None
     # Pass the correct image dictionaries
     generate_html_with_keypress(target_images, reference_images, out_file)
 
-
-
-def make_zero(num, threshold=0.0001):
+def make_zero(num, threshold=0.01):
     if abs(num) < threshold:
         return 0
     else:
