@@ -1,0 +1,35 @@
+# Markups fiducial file version = 4.6
+# CoordinateSystem = 0
+# columns = id,x,y,z,ow,ox,oy,oz,vis,sel,lock,label,desc,associatedNodeID
+vtkMRMLMarkupsFiducialNode_0,0.00000,14.09945,0.00000,0.00000,0,0,1.00000,1,1,1,1,AC,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_1,0.00000,-14.09945,-0.00000,0.00000,0,0,1.00000,1,1,1,2,PC,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_4,0.01041,-26.22106,-10.72845,0.00000,0,0,1.00000,1,1,1,3,infracollicular sulcus,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_5,0.00000,-10.77824,-18.03544,0.00000,0,0,1.00000,1,1,1,4,PMJ,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_6,-0.18577,-2.60028,-7.68151,0.00000,0,0,1.00000,1,1,1,5,superior interpeduncular fossa,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_7,13.71662,-13.68330,-7.50872,0.00000,0,0,1.00000,1,1,1,6,R superior LMS,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_8,-13.67628,-14.27947,-7.63030,0.00000,0,0,1.00000,1,1,1,7,L superior LMS,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_9,10.57344,-16.78627,-17.86755,0.00000,0,0,1.00000,1,1,1,8,R inferior LMS,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_10,-11.29593,-16.50578,-17.98341,0.00000,0,0,1.00000,1,1,1,9,L inferior LMS,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_11,0.05859,-41.15243,1.88328,0.00000,0,0,1.00000,1,1,1,10,culmen,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_3,0.10834,4.09771,-12.39008,0.00000,0,0,0.00000,1,1,1,11,intermammillary sulcus,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_12,2.24446,4.31219,-10.54870,0.00000,0,0,1.00000,1,1,1,12,R MB,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_13,-1.90499,4.18480,-10.72147,0.00000,0,0,1.00000,1,1,1,13,L MB,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_14,-0.02527,-20.06784,2.46553,0.00000,0,0,1.00000,1,1,1,14,pineal gland,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_16,15.88134,13.91873,29.58837,0.00000,0,0,1.00000,1,1,1,15,R LV at AC ,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_17,-15.56545,13.91890,29.23704,0.00000,0,0,1.00000,1,1,1,16,L LV at AC,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_18,19.64993,-14.27841,29.33853,0.00000,0,0,1.00000,1,1,1,17,R LV at PC,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_19,-19.36211,-14.10256,29.11724,0.00000,0,0,1.00000,1,1,1,18,L LV at PC,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_20,0.02378,43.93403,9.44817,0.00000,0,0,1.00000,1,1,1,19,genu of CC,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_2,-0.06004,-26.14940,7.90245,0.00000,0,0,0.00000,1,1,1,20,splenium of CC,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_21,32.96482,9.69047,-23.59087,0.00000,0,0,1.00000,1,1,1,21,R AL temporal horn,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_22,-33.52313,8.02862,-21.54940,0.00000,0,0,1.00000,1,1,1,22,L AL temporal horn,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_23,16.79697,2.57715,-14.16608,0.00000,0,0,1.00000,1,1,1,23,R superior AM temporal horn,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_24,-17.75269,2.54334,-14.52049,0.00000,0,0,1.00000,1,1,1,24,L superior AM temporal horn,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_26,22.00402,8.50439,-26.18835,0.00000,0,0,1.00000,1,1,1,25,R inferior AM temporal horn,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_27,-22.54587,8.49148,-24.54521,0.00000,0,0,1.00000,1,1,1,26,L inferior AM temporal horn,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_28,14.41863,-29.42214,5.24375,0.00000,0,0,1.00000,1,1,1,27,R indusium griseum origin,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_29,-15.51961,-31.47338,5.09215,0.00000,0,0,1.00000,1,1,1,28,L indusium griseum origin,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_30,20.08748,-68.63448,1.62555,0.00000,0,0,1.00000,1,1,1,29,R ventral occipital horn,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_31,-19.63269,-71.08370,0.30286,0.00000,0,0,1.00000,1,1,1,30,L ventral occipital horn,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_32,12.44152,29.94157,-5.96700,0.00000,0,0,1.00000,1,1,1,31,R olfactory sulcal fundus,vtkMRMLScalarVolumeNode1
+vtkMRMLMarkupsFiducialNode_33,-12.72052,29.53792,-6.22743,0.00000,0,0,1.00000,1,1,1,32,L olfactory sulcal fundus,vtkMRMLScalarVolumeNode1

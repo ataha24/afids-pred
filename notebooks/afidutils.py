@@ -15,6 +15,8 @@ from joblib import Parallel, delayed
 from io import BytesIO
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.animation import FuncAnimation
+import pickle
+
 
 
 # Dictionary for AFID labels
@@ -34,6 +36,12 @@ combined_lables = ['AC','PC', 'ICS', 'PMJ','SIPF','SLMS','ILMS','CUL','IMS','MB'
 combined_lables = [element + axis for axis in ['x', 'y', 'z'] for element in combined_lables]
 r = [6,8,12,15,17,21,23,25,27,29,31]
 l = [7,9,13,16,18,22,24,26,28,30,32]
+
+
+exclude_afids = ['CULx','PGx','GENUx', 'SPLEx', 'ALTHx', 'SAMTHx', 'IAMTHx', 'IGOx','VOHx','OSFx',
+                 'CULy','PGy','GENUy', 'SPLEy', 'ALTHy', 'SAMTHy', 'IAMTHy', 'IGOy','VOHy','OSFy',
+                 'CULz','PGz','GENUz', 'SPLEz', 'ALTHz', 'SAMTHz', 'IAMTHz', 'IGOz','VOHz','OSFz'
+                 ]
 
 def fcsvtodf(fcsv_path):
     """
@@ -780,6 +788,107 @@ def generate_interactive_mri_html(nii_path, fcsv_path, labels, ref_nii_path=None
 
     # Pass the correct image dictionaries
     generate_html_with_keypress(target_images, reference_images, out_file)
+
+def flip_and_concatenate_hemispheres(df_afids):
+    """
+    Flips hemispheres by removing left/right AFIDs, relabels columns, and concatenates 
+    mirrored and non-mirrored data.
+
+    Parameters:
+        df_afids (pd.DataFrame): Original DataFrame of AFID coordinates.
+        afidutils (module or object): Utility with attributes:
+            - left_afids (list): Column names for left hemisphere AFIDs.
+            - right_afids (list): Column names for right hemisphere AFIDs.
+            - combined_lables (list): Unified column names after hemisphere flip.
+            - exclude_afids (list): Columns to exclude from final DataFrame.
+
+    Returns:
+        pd.DataFrame: Combined and cleaned DataFrame with flipped hemispheres.
+    """
+    df_afids_mcp_l = df_afids.copy()
+    df_afids_mcp_l[[col for col in df_afids.columns if 'x' in col]] *= -1
+    
+    # Drop left hemisphere from one copy, right from the other
+    df_afids_mcp = df_afids.drop(left_afids, axis=1)
+    df_afids_mcp_l = df_afids_mcp_l.drop(right_afids, axis=1)
+
+    # Rename columns to have consistent structure
+    df_afids_mcp.columns = combined_lables
+    df_afids_mcp_l.columns = combined_lables
+
+    # Concatenate mirrored and original data
+    concatenated_df = pd.concat([df_afids_mcp, df_afids_mcp_l], ignore_index=True)
+
+    # Drop excluded AFIDs
+    concatenated_df.drop(exclude_afids, axis=1, inplace=True)
+
+    return concatenated_df
+
+
+def predict_stn_coordinates(
+    subject_afid_path,
+    model_path
+):
+    """
+    Runs the trained AFIDs -> STN model on a single subject and returns predicted coordinates.
+
+    Parameters
+    ----------
+    subject_afid_path : str
+        Path to the subject's .fcsv AFID file in ACPC + mcp centered space.
+    model_path : str
+        Path to the trained model pickle file.
+    afidutils : module
+        AFID utility module, must include:
+        - fcsvtodf()
+        - left_afids, right_afids, combined_lables, exclude_afids
+
+    Returns
+    -------
+    y_pred : np.ndarray
+        Predicted STN coordinates, shape (82, 3).
+    """
+
+    # Load subject AFIDs
+    df = fcsvtodf(subject_afid_path)[0]
+
+    # values between -0.01 and 0.01 are set to zero
+    df.map(make_zero) 
+
+    # Mirror for left hemisphere
+    df_l = df.copy()
+    df_l[[col for col in df.columns if 'x' in col]] *= -1
+
+    # Drop left/right hemisphere-specific AFIDs
+    df.drop(left_afids, axis=1, inplace=True)
+    df_l.drop(right_afids, axis=1, inplace=True)
+
+    # Rename to combined labels
+    df.columns = combined_lables
+    df_l.columns = combined_lables
+
+    # Merge original and mirrored
+    df_combined = pd.concat([df, df_l], axis=0)
+
+    # Drop excluded AFIDs (defined within afidutils)
+    df_proc = df_combined.drop(exclude_afids, axis=1)
+
+    # Load model
+    with open(model_path, 'rb') as file:
+        model_dict = pickle.load(file)
+
+    scaler = model_dict['standard_scaler']
+    pca = model_dict['pca']
+    ridge_models = [model_dict['x'], model_dict['y'], model_dict['z']]
+
+    # Transform
+    X = scaler.transform(df_proc.values)
+    X = pca.transform(X)
+
+    # Predict STN
+    y_pred = np.column_stack([ridge.predict(X) for ridge in ridge_models])
+
+    return y_pred
 
 def make_zero(num, threshold=0.01):
     if abs(num) < threshold:
