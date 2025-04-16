@@ -37,7 +37,7 @@ combined_lables = [element + axis for axis in ['x', 'y', 'z'] for element in com
 r = [6,8,12,15,17,21,23,25,27,29,31]
 l = [7,9,13,16,18,22,24,26,28,30,32]
 
-
+exclude_afids_labels = [10,14,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
 exclude_afids = ['CULx','PGx','GENUx', 'SPLEx', 'ALTHx', 'SAMTHx', 'IAMTHx', 'IGOx','VOHx','OSFx',
                  'CULy','PGy','GENUy', 'SPLEy', 'ALTHy', 'SAMTHy', 'IAMTHy', 'IGOy','VOHy','OSFy',
                  'CULz','PGz','GENUz', 'SPLEz', 'ALTHz', 'SAMTHz', 'IAMTHz', 'IGOz','VOHz','OSFz'
@@ -817,7 +817,7 @@ def flip_and_concatenate_hemispheres(df_afids):
     df_afids_mcp_l.columns = combined_lables
 
     # Concatenate mirrored and original data
-    concatenated_df = pd.concat([df_afids_mcp, df_afids_mcp_l], ignore_index=True)
+    concatenated_df = pd.concat([df_afids_mcp, df_afids_mcp_l])
 
     # Drop excluded AFIDs
     concatenated_df.drop(exclude_afids, axis=1, inplace=True)
@@ -855,23 +855,7 @@ def predict_stn_coordinates(
     # values between -0.01 and 0.01 are set to zero
     df.map(make_zero) 
 
-    # Mirror for left hemisphere
-    df_l = df.copy()
-    df_l[[col for col in df.columns if 'x' in col]] *= -1
-
-    # Drop left/right hemisphere-specific AFIDs
-    df.drop(left_afids, axis=1, inplace=True)
-    df_l.drop(right_afids, axis=1, inplace=True)
-
-    # Rename to combined labels
-    df.columns = combined_lables
-    df_l.columns = combined_lables
-
-    # Merge original and mirrored
-    df_combined = pd.concat([df, df_l], axis=0)
-
-    # Drop excluded AFIDs (defined within afidutils)
-    df_proc = df_combined.drop(exclude_afids, axis=1)
+    df_proc = flip_and_concatenate_hemispheres(df)
 
     # Load model
     with open(model_path, 'rb') as file:
